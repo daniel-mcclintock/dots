@@ -5,14 +5,14 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 
   " Auto install all the things
   au VimEnter * PlugInstall
-  au VimEnter * LspInstall bashls
-  au VimEnter * LspInstall clangd
-  au VimEnter * LspInstall gdscript
-  au VimEnter * LspInstall html
-  au VimEnter * LspInstall jsonls
-  au VimEnter * LspInstall pyls
-  au VimEnter * LspInstall tsserver
-  au VimEnter * LspInstall vimls
+  " LspInstall bashls
+  " LspInstall clangd
+  " LspInstall gdscript
+  " LspInstall html
+  " LspInstall jsonls
+  " LspInstall pyls
+  " LspInstall tsserver
+  " LspInstall vimls
 endif        
 
 let mapleader = ' '
@@ -87,19 +87,21 @@ call sign_define("LspDiagnosticsInformationSign",
       \{"text" : "I", "texthl" : "LspDiagnosticsInformation"})
 call sign_define("LspDiagnosticHintSign",
       \{"text" : "H", "texthl" : "LspDiagnosticsHint"})
-au BufEnter * silent! lua require'completion'.on_attach()
 
-silent ! lua require'nvim_lsp'.vimls.setup{on_attach=require'diagnostic'.on_attach}
-silent ! lua require'nvim_lsp'.bashls.setup{on_attach=require'diagnostic'.on_attach}
-silent ! lua require'nvim_lsp'.clangd.setup{on_attach=require'diagnostic'.on_attach}
-silent ! lua require'nvim_lsp'.gdscript.setup{on_attach=require'diagnostic'.on_attach}
-silent ! lua require'nvim_lsp'.tsserver.setup{on_attach=require'diagnostic'.on_attach}
-silent ! lua require'nvim_lsp'.html.setup{on_attach=require'diagnostic'.on_attach}
-silent ! lua require'nvim_lsp'.cssls.setup{on_attach=require'diagnostic'.on_attach}
-silent ! lua require'nvim_lsp'.jsonls.setup{on_attach=require'diagnostic'.on_attach}
+" The following lua calls will bork on the first use of this config
+au BufEnter * lua require'completion'.on_attach()
+
+lua require'nvim_lsp'.vimls.setup{on_attach=require'diagnostic'.on_attach}
+lua require'nvim_lsp'.bashls.setup{on_attach=require'diagnostic'.on_attach}
+lua require'nvim_lsp'.clangd.setup{on_attach=require'diagnostic'.on_attach}
+lua require'nvim_lsp'.gdscript.setup{on_attach=require'diagnostic'.on_attach}
+lua require'nvim_lsp'.tsserver.setup{on_attach=require'diagnostic'.on_attach}
+lua require'nvim_lsp'.html.setup{on_attach=require'diagnostic'.on_attach}
+lua require'nvim_lsp'.cssls.setup{on_attach=require'diagnostic'.on_attach}
+lua require'nvim_lsp'.jsonls.setup{on_attach=require'diagnostic'.on_attach}
 
 " this is a bit much, kinda slow
-silent ! lua require'nvim_lsp'.pyls.setup{settings={pyls={plugins={
+lua require'nvim_lsp'.pyls.setup{settings={pyls={plugins={
       \ flake8={enabled=true, import_order_style='google'},
       \ pycodestyle={enabled=true},
       \ pydocstyle={enabled=true},
