@@ -15,6 +15,8 @@ packages=(
     ruby-build
     python
     python-pip
+    ttf-jetbrains-mono
+    hsetroot
 )
 
 python_packages=(
@@ -53,6 +55,7 @@ mkdir -p ${HOME}/.config/nvim
 pip install ${python_packages[*]}
 
 ln -sf ${PWD}/bashrc ${HOME}/.bashrc
+ln -sf ${PWD}/xinitrc ${HOME}/.xinitrc
 ln -sf ${PWD}/bash_profile ${HOME}/.bash_profile
 ln -sf ${PWD}/init.vim ${HOME}/.config/nvim/init.vim
 ln -sf ${PWD}/dwm/dwm ${HOME}/.local/bin/dwm
