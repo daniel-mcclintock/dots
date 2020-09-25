@@ -4,25 +4,32 @@ set -ex
 
 packages=(
     base-devel
-    libxinerama
-    libxft
-    fzf
-    neovim-git
-    python-pynvim-git
+    bower
     docker
     docker-compose
-    rbenv
-    ruby-build
+    fzf
+    grunt-cli
+    hsetroot
+    libxft
+    libxinerama
+    mariadb-libs
+    neovim-git
+    nodejs-foreman
+    npm
+    postgresql-libs
     python
     python-pip
+    python-pynvim-git
+    qutebrowser
+    rbenv
+    ruby-build
     ttf-jetbrains-mono
-    hsetroot
 )
 
 python_packages=(
     flake8
-    pydocstyle
     pycodestyle
+    pydocstyle
     pylint
     python-language-server
 )
@@ -61,3 +68,5 @@ ln -sf ${PWD}/init.vim ${HOME}/.config/nvim/init.vim
 ln -sf ${PWD}/dwm/dwm ${HOME}/.local/bin/dwm
 ln -sf ${PWD}/st/st ${HOME}/.local/bin/st
 ln -sf ${PWD}/work.sh ${HOME}/.local/bin/work
+ln -sf ${PWD}/qb-work.sh ${HOME}/.local/bin/qb-work
+ln -sf ${PWD}/qb-personal.sh ${HOME}/.local/bin/qb-personal
