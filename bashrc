@@ -6,6 +6,18 @@ alias ls="ls --color=auto"
 alias svim="sudo nvim"
 alias webcam="mpv /dev/video0 --profile=low-latency --untimed"
 
+RED="\033[0;31m"
+NC="\033[0m"
+GREY="\033[1;30m"
+GREEN="\033[0;32m"
+LBLUE="\033[0;34m"
+
+export PS1="\n$NC\u $LBLUE\w\n$NC> "
+
+cd() {
+    command cd $1 && ls
+}
+
 fd() {
     # NOTE: The `fd` name conflicts with the find replacement `fd`
     local dir
@@ -30,6 +42,16 @@ fpass() {
         sed 's/.gpg$//g' |
         fzf
     )"
+}
+
+git-dab() {
+    git checkout master &&
+    git branch -D `git branch | grep -E -v 'master|\*'` &&
+    git pull
+}
+
+git-checkout() {
+    git checkout `git branch -a | sed 's/remotes\/origin\///g' | sed 's/[\* ]//g' | grep -v 'HEAD->' | sort -u | fzf`
 }
 
 eval "$(pyenv init -)"

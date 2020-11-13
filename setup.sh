@@ -5,25 +5,31 @@ set -ex
 packages=(
     base-devel
     bower
+    dmenu
     docker
     docker-compose
+    elixir
     fzf
     grunt-cli
     hsetroot
     libxft
     libxinerama
     mariadb-libs
+    mpv
     neovim-git
     nodejs-foreman
     npm
+    pass
     postgresql-libs
     python
     python-pip
     python-pynvim-git
     qutebrowser
     rbenv
+    ripgrep
     ruby-build
     ttf-jetbrains-mono
+    xorg-xsetroot
 )
 
 python_packages=(
@@ -70,3 +76,4 @@ ln -sf ${PWD}/st/st ${HOME}/.local/bin/st
 ln -sf ${PWD}/work.sh ${HOME}/.local/bin/work
 ln -sf ${PWD}/qb-work.sh ${HOME}/.local/bin/qb-work
 ln -sf ${PWD}/qb-personal.sh ${HOME}/.local/bin/qb-personal
+ln -sf ${PWD}/fzf_run ${HOME}/.local/bin/fzf_run

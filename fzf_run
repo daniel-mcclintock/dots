@@ -1,0 +1,4 @@
+!#/bin/sh
+
+cmd="$(dmenu_path | fzf)"
+exec setsid -f $cmd

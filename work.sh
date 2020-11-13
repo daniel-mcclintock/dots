@@ -7,5 +7,9 @@ if [ "$1" == "start" ]; then
     docker-compose start || (docker-compose build && docker-compose start)
 elif [ "$1" == "stop" ]; then
     cd "$(dirname "$(readlink ~/.local/bin/work)")"
-    systemctl is-active docker && (docker-compose stop; systemctl stop docker)
+    systemctl is-active docker && (
+        docker-compose stop;
+        systemctl stop docker;
+        systemctl stop containerd
+    )
 fi
