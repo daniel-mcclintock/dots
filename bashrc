@@ -18,6 +18,11 @@ cd() {
     command cd $1 && ls
 }
 
+h() {
+    cmd="$(history | sed 's/^[\ ]\+[0-9\ ]\+//g' | fzf --tac)"
+    [ -n "$cmd" ] && read -p "Run cmd: '$cmd'" confirmation && $cmd
+}
+
 fd() {
     # NOTE: The `fd` name conflicts with the find replacement `fd`
     local dir

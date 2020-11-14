@@ -73,7 +73,4 @@ ln -sf ${PWD}/bash_profile ${HOME}/.bash_profile
 ln -sf ${PWD}/init.vim ${HOME}/.config/nvim/init.vim
 ln -sf ${PWD}/dwm/dwm ${HOME}/.local/bin/dwm
 ln -sf ${PWD}/st/st ${HOME}/.local/bin/st
-ln -sf ${PWD}/work.sh ${HOME}/.local/bin/work
-ln -sf ${PWD}/qb-work.sh ${HOME}/.local/bin/qb-work
-ln -sf ${PWD}/qb-personal.sh ${HOME}/.local/bin/qb-personal
-ln -sf ${PWD}/fzf_run ${HOME}/.local/bin/fzf_run
+ln -sf ${PWD}/bin/* ${HOME}/.local/bin/
