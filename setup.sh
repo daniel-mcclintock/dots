@@ -74,3 +74,6 @@ ln -sf ${PWD}/init.vim ${HOME}/.config/nvim/init.vim
 ln -sf ${PWD}/dwm/dwm ${HOME}/.local/bin/dwm
 ln -sf ${PWD}/st/st ${HOME}/.local/bin/st
 ln -sf ${PWD}/bin/* ${HOME}/.local/bin/
+
+# If using custom branch (https://github.com/qutebrowser/qutebrowser/pull/5317)
+#ln -sf ${PWD}/qutebrowser/qutebrowser.py ${HOME}/.local/bin/qutebrowser

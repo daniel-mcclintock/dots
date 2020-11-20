@@ -27,10 +27,6 @@ call plug#begin('~/.config/nvim/plugged')
     let g:completion_enable_auto_signature = 0
     Plug 'haorenW1025/completion-nvim'
 
-    let g:diagnostic_enable_virtual_text = 0
-    let g:diagnostic_show_sign = 1
-    Plug 'haorenW1025/diagnostic-nvim'
-
     " Languages
     Plug 'sheerun/vim-polyglot'  " All the languages
     Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -57,9 +53,12 @@ hi EndOfbuffer guifg=bg  " Hide empty line character
 hi Over80 guibg=#5b4252
 hi Over100 guibg=#7b4252
 hi VertSplit guibg=#4c566a
-hi LspDiagnosticsError guibg=#4a4252
-hi LspDiagnosticsWarning guibg=#4c566a
-hi LspDiagnosticsUnderline guibg=#4f4050
+hi LspDiagnosticsUnderlineError guibg=#4a4252
+hi LspDiagnosticsUnderlineWarning guibg=#4c566a
+hi LspDiagnosticsUnderlineInformation guibg=#4f4050
+hi LspDiagnosticsSignError guifg=#4a4252
+hi LspDiagnosticsSIgnWarning guifg=#4c566a
+hi LspDiagnosticsUnderlineInformation guifg=#4f4050
 
 set mouse=a
 set textwidth=80
@@ -79,26 +78,17 @@ set nobackup nowritebackup noswapfile  " Don't create tmp files
 let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
 "" LSP ------------------------------------------------------------------------
-call sign_define("LspDiagnosticsErrorSign",
-      \{"text" : "E", "texthl" : "LspDiagnosticsError"})
-call sign_define("LspDiagnosticsWarningSign",
-      \{"text" : "W", "texthl" : "LspDiagnosticsWarning"})
-call sign_define("LspDiagnosticsInformationSign",
-      \{"text" : "I", "texthl" : "LspDiagnosticsInformation"})
-call sign_define("LspDiagnosticHintSign",
-      \{"text" : "H", "texthl" : "LspDiagnosticsHint"})
-
 " The following lua calls will bork on the first use of this config
 au BufEnter * lua require'completion'.on_attach()
 
-lua require'nvim_lsp'.vimls.setup{on_attach=require'diagnostic'.on_attach}
-lua require'nvim_lsp'.bashls.setup{on_attach=require'diagnostic'.on_attach}
-lua require'nvim_lsp'.clangd.setup{on_attach=require'diagnostic'.on_attach}
-lua require'nvim_lsp'.gdscript.setup{on_attach=require'diagnostic'.on_attach}
-lua require'nvim_lsp'.tsserver.setup{on_attach=require'diagnostic'.on_attach}
-lua require'nvim_lsp'.html.setup{on_attach=require'diagnostic'.on_attach}
-lua require'nvim_lsp'.cssls.setup{on_attach=require'diagnostic'.on_attach}
-lua require'nvim_lsp'.jsonls.setup{on_attach=require'diagnostic'.on_attach}
+lua require'nvim_lsp'.vimls.setup{}
+lua require'nvim_lsp'.bashls.setup{}
+lua require'nvim_lsp'.clangd.setup{}
+lua require'nvim_lsp'.gdscript.setup{}
+lua require'nvim_lsp'.tsserver.setup{}
+lua require'nvim_lsp'.html.setup{}
+lua require'nvim_lsp'.cssls.setup{}
+lua require'nvim_lsp'.jsonls.setup{}
 
 " this is a bit much, kinda slow
 lua require'nvim_lsp'.pyls.setup{settings={pyls={plugins={
@@ -106,19 +96,23 @@ lua require'nvim_lsp'.pyls.setup{settings={pyls={plugins={
       \ pycodestyle={enabled=true},
       \ pydocstyle={enabled=true},
       \ pylint={enabled=true}
-      \ }}},on_attach=require'diagnostic'.on_attach}
+      \ }}}}
+
+lua vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+      \ vim.lsp.diagnostic.on_publish_diagnostics,
+      \ {underline=true,virtual_text=false,signs=true})
 
 nnoremap <silent> K  <cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<cr>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<cr>
 nnoremap <silent> td <cmd>lua vim.lsp.buf.type_definition()<cr>
-noremap <silent> <c-K> :PrevDiagnostic<cr>
-noremap <silent> <c-J> :NextDiagnostic<cr>
+noremap <silent> <c-K> <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
+noremap <silent> <c-J> <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
 
 au VimResized * wincmd = " automatically evenly resize splits
 au Filetype terminal setl nonumber
 au Filetype c,cpp,vim,javascript setl softtabstop=2 tabstop=2 shiftwidth=2 expandtab
-au Filetype c,cpp,python,sh,javascript,gdscript3 setl omnifunc=v:lua.vim.lsp.omnifunc
+au Filetype html,c,cpp,python,sh,javascript,gdscript3,elixir setl omnifunc=v:lua.vim.lsp.omnifunc
 au Filetype cpp,c,gdscript3,python,vim,elixir set colorcolumn=80,100 |
       \ call matchadd('Over80',  '\%81v.\+',  100) |
       \ call matchadd('Over100', '\%101v.\+', 100)

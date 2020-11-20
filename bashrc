@@ -5,6 +5,8 @@ alias vim=nvim
 alias ls="ls --color=auto"
 alias svim="sudo nvim"
 alias webcam="mpv /dev/video0 --profile=low-latency --untimed"
+# neat tools you will probably forget about.
+# hyperfine - benchmark commands
 
 RED="\033[0;31m"
 NC="\033[0m"
@@ -12,7 +14,14 @@ GREY="\033[1;30m"
 GREEN="\033[0;32m"
 LBLUE="\033[0;34m"
 
-export PS1="\n$NC\u $LBLUE\w\n$NC> "
+setps1() {
+    local BRANCH="$RED$(git branch 2>/dev/null | grep '\*' | sed 's/[\*\ ]//g') "
+    PS1="\[$NC\]\u \[$BRANCH\]\[$LBLUE\]\w\n\[$NC\]> "
+}
+
+PROMPT_COMMAND="setps1"
+
+alias aws-keys="cat ~/.aws/credentials"
 
 cd() {
     command cd $1 && ls
@@ -49,9 +58,17 @@ fpass() {
     )"
 }
 
+git() {
+    if [ $# -eq 0 ]; then
+        `printf "git-checkout\ngit-dab\ngit fetch\ngit pull\ngit branch\ngit log" | fzf`
+    else
+        command git $@
+    fi
+}
+
 git-dab() {
-    git checkout master &&
-    git branch -D `git branch | grep -E -v 'master|\*'` &&
+    git checkout master || git checkout main &&
+    git branch -D `git branch | grep -E -v 'master|\*'`;
     git pull
 }
 
@@ -59,5 +76,10 @@ git-checkout() {
     git checkout `git branch -a | sed 's/remotes\/origin\///g' | sed 's/[\* ]//g' | grep -v 'HEAD->' | sort -u | fzf`
 }
 
-eval "$(pyenv init -)"
-eval "$(rbenv init -)"
+pubkey-work() {
+    cat ~/.ssh/id_rsa.pub | sed 's/smelly@/daniel.mcclintock@/'
+}
+
+pubkey-personal() {
+    cat ~/.ssh/id_rsa.pub
+}
