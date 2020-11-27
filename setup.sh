@@ -20,6 +20,7 @@ packages=(
     nodejs-foreman
     npm
     pass
+    pdfjs
     postgresql-libs
     python
     python-pip
@@ -29,6 +30,7 @@ packages=(
     ripgrep
     ruby-build
     ttf-jetbrains-mono
+    xdotool
     xorg-xsetroot
 )
 

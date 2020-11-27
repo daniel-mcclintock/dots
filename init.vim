@@ -43,6 +43,8 @@ call plug#begin('~/.config/nvim/plugged')
     let g:auto_docstring_style = 'google'
     Plug 'ColinKennedy/vim-auto_docstring'
 
+    Plug 'sbdchd/neoformat'
+
     let g:nord_cursor_line_number_background = 1
     Plug 'arcticicestudio/nord-vim'
 call plug#end()
@@ -55,10 +57,8 @@ hi Over100 guibg=#7b4252
 hi VertSplit guibg=#4c566a
 hi LspDiagnosticsUnderlineError guibg=#4a4252
 hi LspDiagnosticsUnderlineWarning guibg=#4c566a
-hi LspDiagnosticsUnderlineInformation guibg=#4f4050
 hi LspDiagnosticsSignError guifg=#4a4252
 hi LspDiagnosticsSIgnWarning guifg=#4c566a
-hi LspDiagnosticsUnderlineInformation guifg=#4f4050
 
 set mouse=a
 set textwidth=80

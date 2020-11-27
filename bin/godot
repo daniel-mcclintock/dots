@@ -1,7 +1,4 @@
-!#/bin/sh
+#!/bin/bash
 
-godot_path="$HOME/dev/personal/godot/editor/"
-version="$(ls ~/dev/personal/godot/editor/ | fzf)"
-cd "$godot_path/$version/bin/"
 
-./godot.linuxbsd.opt.tools.64 || ./godot.x11.opt.tools.64
+st -e bash -c 'godot_path="$HOME/dev/personal/godot/editor/"; version="$(ls ~/dev/personal/godot/editor/ | fzf)"; cd "$godot_path/$version/bin/"; ./godot.linuxbsd.opt.tools.64 || ./godot.x11.opt.tools.64'
