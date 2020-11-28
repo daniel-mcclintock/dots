@@ -4,6 +4,7 @@ set -ex
 
 packages=(
     base-devel
+    blender
     bower
     dmenu
     docker
@@ -21,20 +22,25 @@ packages=(
     npm
     pass
     pdfjs
+    picom
     postgresql-libs
+    pyenv
     python
     python-pip
+    python-pipenv
     python-pynvim-git
     qutebrowser
     rbenv
     ripgrep
     ruby-build
     ttf-jetbrains-mono
+    wget
     xdotool
     xorg-xsetroot
 )
 
 python_packages=(
+    adblock
     flake8
     pycodestyle
     pydocstyle
@@ -48,6 +54,7 @@ if ! yay -Syu --needed --noconfirm ${packages[*]}; then
     makepkg --install --noconfirm
     cd ..
     rm -Rf yay
+    yay -Syu --needed --noconfirm ${packages[*]}
 fi
 
 if ! git clone git@github.com:daniel-mcclintock/dwm.git; then
@@ -67,7 +74,7 @@ fi
 mkdir -p ${HOME}/.local/bin
 mkdir -p ${HOME}/.config/nvim
 
-pip install ${python_packages[*]}
+pip install --user --upgrade ${python_packages[*]}
 
 ln -sf ${PWD}/bashrc ${HOME}/.bashrc
 ln -sf ${PWD}/xinitrc ${HOME}/.xinitrc

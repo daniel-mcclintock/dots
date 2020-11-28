@@ -81,17 +81,17 @@ let g:python3_host_prog = '/usr/bin/python'
 " The following lua calls will bork on the first use of this config
 au BufEnter * lua require'completion'.on_attach()
 
-lua require'nvim_lsp'.vimls.setup{}
-lua require'nvim_lsp'.bashls.setup{}
-lua require'nvim_lsp'.clangd.setup{}
-lua require'nvim_lsp'.gdscript.setup{}
-lua require'nvim_lsp'.tsserver.setup{}
-lua require'nvim_lsp'.html.setup{}
-lua require'nvim_lsp'.cssls.setup{}
-lua require'nvim_lsp'.jsonls.setup{}
+lua require'lspconfig'.vimls.setup{}
+lua require'lspconfig'.bashls.setup{}
+lua require'lspconfig'.clangd.setup{}
+lua require'lspconfig'.gdscript.setup{}
+lua require'lspconfig'.tsserver.setup{}
+lua require'lspconfig'.html.setup{}
+lua require'lspconfig'.cssls.setup{}
+lua require'lspconfig'.jsonls.setup{}
 
 " this is a bit much, kinda slow
-lua require'nvim_lsp'.pyls.setup{settings={pyls={plugins={
+lua require'lspconfig'.pyls.setup{settings={pyls={plugins={
       \ flake8={enabled=true, import_order_style='google'},
       \ pycodestyle={enabled=true},
       \ pydocstyle={enabled=true},
