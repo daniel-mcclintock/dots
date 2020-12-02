@@ -19,12 +19,10 @@ let mapleader = ' '
 
 call plug#begin('~/.config/nvim/plugged')
     " Core stuff, absolute minimum to keep me sane
-    Plug 'neovim/nvim-lspconfig'
     Plug 'junegunn/fzf'
     Plug 'junegunn/fzf.vim'
 
-    let g:completion_enable_auto_hover = 0
-    let g:completion_enable_auto_signature = 0
+    Plug 'neovim/nvim-lspconfig'
     Plug 'haorenW1025/completion-nvim'
 
     " Languages
@@ -47,6 +45,7 @@ call plug#begin('~/.config/nvim/plugged')
 
     let g:nord_cursor_line_number_background = 1
     Plug 'arcticicestudio/nord-vim'
+    Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
 silent! colorscheme nord  " Don't bork if nord is not available
@@ -55,10 +54,12 @@ hi EndOfbuffer guifg=bg  " Hide empty line character
 hi Over80 guibg=#5b4252
 hi Over100 guibg=#7b4252
 hi VertSplit guibg=#4c566a
-hi LspDiagnosticsUnderlineError guibg=#4a4252
-hi LspDiagnosticsUnderlineWarning guibg=#4c566a
-hi LspDiagnosticsSignError guifg=#4a4252
-hi LspDiagnosticsSIgnWarning guifg=#4c566a
+hi LspDiagnosticsUnderlineError guibg=#7b4252
+hi LspDiagnosticsUnderlineWarning guibg=#6b5b00
+hi LspDiagnosticsUnderlineInformation guibg=#4c566a
+hi LspDiagnosticsSignError guifg=#7b4252
+hi LspDiagnosticsSignWarning guifg=#6b5b00
+hi LspDiagnosticsSignInformation guifg=#4c566a
 
 set mouse=a
 set textwidth=80
@@ -81,6 +82,7 @@ let g:python3_host_prog = '/usr/bin/python'
 " The following lua calls will bork on the first use of this config
 au BufEnter * lua require'completion'.on_attach()
 
+lua require'colorizer'.setup()
 lua require'lspconfig'.vimls.setup{}
 lua require'lspconfig'.bashls.setup{}
 lua require'lspconfig'.clangd.setup{}

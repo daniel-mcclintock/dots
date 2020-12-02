@@ -10,6 +10,7 @@ packages=(
     docker
     docker-compose
     elixir
+    flake8
     fzf
     grunt-cli
     hsetroot
@@ -26,9 +27,14 @@ packages=(
     postgresql-libs
     pyenv
     python
+    python-language-server
     python-pip
     python-pipenv
-    python-pynvim-git
+    python-pre-commit
+    python-pycodestyle
+    python-pydocstyle
+    python-pylint
+    python-pynvim
     qutebrowser
     rbenv
     ripgrep
@@ -37,15 +43,6 @@ packages=(
     wget
     xdotool
     xorg-xsetroot
-)
-
-python_packages=(
-    adblock
-    flake8
-    pycodestyle
-    pydocstyle
-    pylint
-    python-language-server
 )
 
 if ! yay -Syu --needed --noconfirm ${packages[*]}; then
@@ -74,8 +71,6 @@ fi
 mkdir -p ${HOME}/.local/bin
 mkdir -p ${HOME}/.config/nvim
 
-pip install --user --upgrade ${python_packages[*]}
-
 ln -sf ${PWD}/bashrc ${HOME}/.bashrc
 ln -sf ${PWD}/xinitrc ${HOME}/.xinitrc
 ln -sf ${PWD}/bash_profile ${HOME}/.bash_profile
@@ -84,5 +79,16 @@ ln -sf ${PWD}/dwm/dwm ${HOME}/.local/bin/dwm
 ln -sf ${PWD}/st/st ${HOME}/.local/bin/st
 ln -sf ${PWD}/bin/* ${HOME}/.local/bin/
 
+mkdir -p ~/.qb-work/config
+mkdir -p ~/.qb-personal/config
+ln -sf ${PWD}/qutebrowser.config.py ~/.qb-work/config/config.py
+ln -sf ${PWD}/qutebrowser.config.py ~/.qb-personal/config/config.py
+
+ln -sf ${PWD}/bin/* ${HOME}/.local/bin/
+
+if [ "$HOSTNAME" == "flaptop" ]; then
+    ln -sf ${PWD}/bin_flaptop/* ${HOME}/.local/bin/
+fi
+
 # If using custom branch (https://github.com/qutebrowser/qutebrowser/pull/5317)
-#ln -sf ${PWD}/qutebrowser/qutebrowser.py ${HOME}/.local/bin/qutebrowser
+# ln -sf ${PWD}/qutebrowser/qutebrowser.py ${HOME}/.local/bin/qutebrowser

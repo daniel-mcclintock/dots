@@ -1,4 +1,7 @@
 #!/bin/sh
 
 cmd="$(dmenu_path | fzf)"
-exec setsid -f $cmd
+setsid -f $cmd
+
+# Shitty hack, allows time for $cmd to start
+sleep 0.2

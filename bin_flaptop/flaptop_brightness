@@ -1,0 +1,24 @@
+#!/bin/sh
+# Smoothly increment backlight level
+
+if [ "$(pgrep flaptop_brightness | wc -l)" -gt 1 ]; then
+    # Already transitioning backlight
+    exit
+fi
+
+BRIGHTNESS="$(cat /sys/class/backlight/amdgpu_bl0/brightness)"
+
+if [ "$1" == "up" ]; then
+    for i in {1..64}; do
+        let "BRIGHTNESS = BRIGHTNESS + 1"
+        echo $BRIGHTNESS > /sys/class/backlight/amdgpu_bl0/brightness
+        sleep 0.00125125
+    done
+elif [ "$1" == "down" ]; then
+    for i in {1..64}; do
+        let "BRIGHTNESS = BRIGHTNESS - 1"
+        echo $BRIGHTNESS > /sys/class/backlight/amdgpu_bl0/brightness
+        sleep 0.00125125
+    done
+fi
+

@@ -3,13 +3,16 @@ set -e
 
 if [ "$1" == "start" ]; then
     sudo systemctl start docker
-    cd "$(dirname "$(readlink ~/.local/bin/work)")"
-    sudo docker-compose start || (sudo docker-compose build && sudo docker-compose start)
+    cd "$(dirname $(realpath $0))/.."
+    sudo docker-compose start || (
+        sudo docker-compose build &&
+        sudo docker-compose start
+    )
 elif [ "$1" == "stop" ]; then
-    cd "$(dirname "$(readlink ~/.local/bin/work)")"
+    cd "$(dirname $(realpath $0))/.."
     sudo systemctl is-active docker && (
-        sudo docker-compose stop;
-        sudo systemctl stop docker;
+        sudo docker-compose stop
+        sudo systemctl stop docker
         sudo systemctl stop containerd
     )
 fi

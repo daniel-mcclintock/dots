@@ -1,0 +1,28 @@
+#!/bin/bash
+# Set custom TDP for laptop based on personal preference
+set -e
+
+limit_temp() {
+    ryzenadj \
+        --stapm-limit=$1 \
+        --fast-limit=$1 \
+        --slow-limit=$1 \
+        --tctl-temp=$2
+}
+
+grep 1 /sys/class/power_supply/AC/online &&
+    (
+        limit_temp 50000 75
+    ) || 
+    (
+        TEMP="$(cat /proc/acpi/ibm/thermal | awk '{print $2}')"
+        # Slowly lower --tctl-temp to target(avoids HEAVY throttling(400mhz) if cpu is
+        # already under heavy load)
+        while [ "$(cat /proc/acpi/ibm/thermal | awk '{print $2}')" -gt 65 ]; do
+            grep 0 /sys/class/power_supply/AC/online && limit_temp 50000 $TEMP
+            let "TEMP=$(cat /proc/acpi/ibm/thermal | awk '{print $2}') - 5"
+            sleep 5 
+        done
+
+        grep 0 /sys/class/power_supply/AC/online && limit_temp 50000 65
+    )

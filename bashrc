@@ -4,7 +4,7 @@ export EDITOR=nvim
 alias vim=nvim
 alias ls="ls --color=auto"
 alias svim="sudo nvim"
-alias webcam="mpv /dev/video0 --profile=low-latency --untimed"
+alias webcam="mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0"
 # neat tools you will probably forget about.
 # hyperfine - benchmark commands
 
