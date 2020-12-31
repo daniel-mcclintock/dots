@@ -1,9 +1,12 @@
 # vim: ft=sh
 export _JAVA_AWT_WM_NONREPARENTING=1
 hsetroot -solid "#2E3440"
+xset s off -dpms  # disable screen blanking
 
 if [ "$HOSTNAME" == "flaptop" ]; then
     `while true; do
+        DF="$(df -H / | tail -n 1 | awk '{print $3 "/" $2}' | sed 's/G//g')"
+        WIFI="$(iw wlp3s0 info | grep -oP '(?<=ssid ).*')"
         MHZ="$(
             grep MHz /proc/cpuinfo |
             awk '{print $4}' |
@@ -25,7 +28,7 @@ if [ "$HOSTNAME" == "flaptop" ]; then
         BATT="$(acpi | grep -o '[0-9]*%' | head -n 1)"
         DATE="$(date '+%d/%m %H:%M')"
 
-        xsetroot -name " $MHZ $TEMP | $BATT | $DATE "
+        xsetroot -name " $DF | $MHZ $TEMP | $WIFI | $BATT | $DATE "
         sleep 5
     done` &
 fi

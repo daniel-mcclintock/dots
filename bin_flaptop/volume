@@ -1,0 +1,16 @@
+#!/bin/bash
+
+export XDG_RUNTIME_DIR=/run/user/$(id -u $(whoami))
+
+if [ "$1" == "mute" ]; then
+    pactl set-sink-mute 0 toggle
+elif [ "$1" == "up" ]; then
+    VOL="$(pactl list sinks | grep '^[[:space:]]Volume:' | grep '[0-9]*%' -o | head -n 1 | sed 's/%//g')"
+    if [ "$VOL" -le 95 ]; then
+        pactl set-sink-volume 0 +5%
+    else
+        pactl set-sink-volume 0 100%
+    fi
+elif [ "$1" == "down" ]; then
+    pactl set-sink-volume 0 -5%
+fi

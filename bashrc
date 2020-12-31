@@ -1,12 +1,13 @@
-export PATH="/home/$USER/.local/bin:$PATH"
+stty -ixon  # Fix c-s halting terminal
 
+export PATH="/home/$USER/.local/bin:$PATH"
 export EDITOR=nvim
+
 alias vim=nvim
 alias ls="ls --color=auto"
 alias svim="sudo nvim"
 alias webcam="mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0"
-# neat tools you will probably forget about.
-# hyperfine - benchmark commands
+alias dump_url="wget --recursive --no-clobber --page-requisites --html-extension --convert-links --no-parent"
 
 RED="\033[0;31m"
 NC="\033[0m"
@@ -21,7 +22,6 @@ setps1() {
 
 PROMPT_COMMAND="setps1"
 
-alias aws-keys="cat ~/.aws/credentials"
 
 cd() {
     command cd $1 && ls
@@ -74,12 +74,4 @@ git-dab() {
 
 git-checkout() {
     git checkout `git branch -a | sed 's/remotes\/origin\///g' | sed 's/[\* ]//g' | grep -v 'HEAD->' | sort -u | fzf`
-}
-
-pubkey-work() {
-    cat ~/.ssh/id_rsa.pub | sed 's/smelly@/daniel.mcclintock@/'
-}
-
-pubkey-personal() {
-    cat ~/.ssh/id_rsa.pub
 }

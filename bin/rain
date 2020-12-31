@@ -1,0 +1,3 @@
+#!/bin/sh
+
+pkill -f "mpv /home/$USER/.rain.opus" || mpv /home/$USER/.rain.opus

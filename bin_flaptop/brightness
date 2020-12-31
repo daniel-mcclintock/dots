@@ -9,16 +9,16 @@ fi
 BRIGHTNESS="$(cat /sys/class/backlight/amdgpu_bl0/brightness)"
 
 if [ "$1" == "up" ]; then
-    for i in {1..64}; do
+    for i in {1..16}; do
         let "BRIGHTNESS = BRIGHTNESS + 1"
         echo $BRIGHTNESS > /sys/class/backlight/amdgpu_bl0/brightness
-        sleep 0.00125125
+        sleep 0.001
     done
 elif [ "$1" == "down" ]; then
-    for i in {1..64}; do
+    for i in {1..16}; do
         let "BRIGHTNESS = BRIGHTNESS - 1"
         echo $BRIGHTNESS > /sys/class/backlight/amdgpu_bl0/brightness
-        sleep 0.00125125
+        sleep 0.001
     done
 fi
 

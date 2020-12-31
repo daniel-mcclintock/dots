@@ -21,7 +21,6 @@ call plug#begin('~/.config/nvim/plugged')
     " Core stuff, absolute minimum to keep me sane
     Plug 'junegunn/fzf'
     Plug 'junegunn/fzf.vim'
-
     Plug 'neovim/nvim-lspconfig'
     Plug 'haorenW1025/completion-nvim'
 
@@ -46,6 +45,8 @@ call plug#begin('~/.config/nvim/plugged')
     let g:nord_cursor_line_number_background = 1
     Plug 'arcticicestudio/nord-vim'
     Plug 'norcalli/nvim-colorizer.lua'
+
+    Plug 'voldikss/vim-floaterm'
 call plug#end()
 
 silent! colorscheme nord  " Don't bork if nord is not available
@@ -57,9 +58,11 @@ hi VertSplit guibg=#4c566a
 hi LspDiagnosticsUnderlineError guibg=#7b4252
 hi LspDiagnosticsUnderlineWarning guibg=#6b5b00
 hi LspDiagnosticsUnderlineInformation guibg=#4c566a
+hi LspDiagnosticsUnderlineHint guibg=#4c566a
 hi LspDiagnosticsSignError guifg=#7b4252
 hi LspDiagnosticsSignWarning guifg=#6b5b00
 hi LspDiagnosticsSignInformation guifg=#4c566a
+hi LspDiagnosticsSignHint guifg=#4c566a
 
 set mouse=a
 set textwidth=80
@@ -81,8 +84,6 @@ let g:python3_host_prog = '/usr/bin/python'
 "" LSP ------------------------------------------------------------------------
 " The following lua calls will bork on the first use of this config
 au BufEnter * lua require'completion'.on_attach()
-
-lua require'colorizer'.setup()
 lua require'lspconfig'.vimls.setup{}
 lua require'lspconfig'.bashls.setup{}
 lua require'lspconfig'.clangd.setup{}
@@ -103,6 +104,8 @@ lua require'lspconfig'.pyls.setup{settings={pyls={plugins={
 lua vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       \ vim.lsp.diagnostic.on_publish_diagnostics,
       \ {underline=true,virtual_text=false,signs=true})
+
+lua require'colorizer'.setup()
 
 nnoremap <silent> K  <cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<cr>
@@ -163,3 +166,5 @@ nnoremap <cr> :noh<cr>
 " Flatten visual text block with F, don't flatten with J in normal mode
 vnoremap F :'<.'>j<cr>
 nnoremap J <nop>
+
+noremap <C-s> :FloatermToggle<cr>
